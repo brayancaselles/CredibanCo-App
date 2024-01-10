@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_grav"
+    app:startDestination="@id/transactionListFragment">
+
+    <fragment
+        android:id="@+id/transactionListFragment"
+        android:name="com.brayandev.credibancoapp.ui.transactionList.TransactionListFragment"
+        android:label="fragment_transaction_list"
+        tools:layout="@layout/fragment_transaction_list" />
+    <fragment
+        android:id="@+id/transactionAuthorizationFragment"
+        android:name="com.brayandev.credibancoapp.ui.transactionAuthorization.TransactionAuthorizationFragment"
+        android:label="fragment_transaction_authorization"
+        tools:layout="@layout/fragment_transaction_authorization" />
+    <fragment
+        android:id="@+id/searchTransactionFragment2"
+        android:name="com.brayandev.credibancoapp.ui.searchTransaction.SearchTransactionFragment"
+        android:label="fragment_search_transaction"
+        tools:layout="@layout/fragment_search_transaction" />
+    <fragment
+        android:id="@+id/transactionDetailFragment"
+        android:name="com.brayandev.credibancoapp.ui.transactionDetail.TransactionDetailFragment"
+        android:label="fragment_transaction_detail"
+        tools:layout="@layout/fragment_transaction_detail" />
+</navigation>

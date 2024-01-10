@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CredibanCoApp</string>
+    <string name="app_name_text">CrediBanCo</string>
+    <string name="bottom_menu_transaction_list">Transacciones</string>
+    <string name="bottom_menu_search">Buscar</string>
+    <string name="bottom_menu_create_transaction">Crear Transaccion</string>
 </resources>

@@ -1,3 +1,37 @@
 
 m
 =app/src/main/java/com/brayandev/credibancoapp/MainActivity.kt,3\b\3b3cb0e05c6eaaf2c3042095f4d9f3fa4976ba62
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
+@
+build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+n
+>app/src/main/java/com/brayandev/credibancoapp/CredibanCoApp.kt,9\0\909ab9476aa84c340d2b26e069f8eafb561e259f
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+p
+@app/src/main/java/com/brayandev/credibancoapp/ui/MainActivity.kt,e\4\e419f51a5aa261703c8cae2e7a5a423a7dbd70b5
+u
+Eapp/src/main/java/com/brayandev/credibancoapp/ui/main/MainActivity.kt,2\1\21e45e63e5bccb362a2feb0f96c6d2b35595f19c
+ã
+[app/src/main/java/com/brayandev/credibancoapp/ui/transactionList/transactionListFragment.kt,2\9\29320ce21fa5105d4900e3acd96dc32bdfc891f5
+è
+_app/src/main/java/com/brayandev/credibancoapp/ui/transactionDetail/transactionDetailFragment.kt,0\7\077dfad4f8d6008dda891cd30b5005880384ab9e
+ù
+mapp/src/main/java/com/brayandev/credibancoapp/ui/transactionAuthorization/TransactionAuthorizationFragment.kt,e\4\e458d5b4d943699d227de465faada21f8a7317b2
+è
+_app/src/main/java/com/brayandev/credibancoapp/ui/transactionDetail/TransactionDetailFragment.kt,3\7\37de8a82223b8a74d185c464c7730bc894e5ed2a
+ã
+[app/src/main/java/com/brayandev/credibancoapp/ui/transactionList/TransactionListFragment.kt,1\e\1e34121a145ba216c0b0fb7b0e5113630dbb3cb4
+è
+_app/src/main/java/com/brayandev/credibancoapp/ui/searchTransaction/SearchTransactionFragment.kt,5\9\59a105bff8d6507ff7ceaf1cbd3316348423cc55
+å
+\app/src/main/java/com/brayandev/credibancoapp/ui/transactionList/TransactionListViewModel.kt,c\a\ca49125765dd0db9aa8366148678df793a4a34bf
+ê
+`app/src/main/java/com/brayandev/credibancoapp/ui/transactionDetail/TransactionDetailViewModel.kt,b\7\b74def678ee0679dbd6ccdcb09531b56b6a4d9e4
+û
+napp/src/main/java/com/brayandev/credibancoapp/ui/transactionAuthorization/TransactionAuthorizationViewModel.kt,9\8\9834d6d85461f727329a8b7ca3f2f7d79ed03581
+ê
+`app/src/main/java/com/brayandev/credibancoapp/ui/searchTransaction/SearchTransactionViewModel.kt,f\2\f2e589ca6bbaa20ce9a0aacdac0f6ea5b5c4fff7
