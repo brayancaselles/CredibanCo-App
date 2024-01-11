@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/transactionListFragment2"
+        android:id="@+id/transactionListFragment"
         android:icon="@drawable/ic_list"
         android:title="@string/bottom_menu_transaction_list" />
 
@@ -11,7 +11,7 @@
         android:title="@string/bottom_menu_search" />
 
     <item
-        android:id="@+id/transactionAuthorizationFragment2"
+        android:id="@+id/transactionAuthorizationFragment"
         android:icon="@drawable/ic_transaction"
         android:title="@string/bottom_menu_create_transaction" />
 </menu>

@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
-    id("kotlin-kapt")
+    //id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
 }
@@ -47,9 +47,8 @@ android {
 
 dependencies {
 
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     val navVersion = "2.7.0"
-    val hiltVersion = "2.44.2" // 2.44-2.48
+    val hiltVersion = "2.48" // 2.44-2.48- 2.44.2
     val roomVersion = "2.5.2" // 2.4.2
     val retrofitVersion = "2.9.0"
     val coroutinesTestVersion = "1.6.4"
@@ -64,7 +63,7 @@ dependencies {
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     // NavComponent
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")

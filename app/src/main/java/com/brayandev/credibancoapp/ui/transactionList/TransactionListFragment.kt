@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.brayandev.credibancoapp.R
 import com.brayandev.credibancoapp.databinding.FragmentTransactionListBinding
 import com.brayandev.credibancoapp.ui.transactionList.adapter.TransactionAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TransactionListFragment : Fragment() {
 
     private var _binding: FragmentTransactionListBinding? = null
@@ -53,7 +55,7 @@ class TransactionListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.transactions.collect { transactionsState ->
                     when (transactionsState) {
-                        is TransactionUIState.Error -> {
+                        is TransactionListUIState.Error -> {
                             showLoading(false)
                             showMessageDialog(
                                 R.string.transaction_authorization_text_title_error_dialog,
@@ -61,11 +63,11 @@ class TransactionListFragment : Fragment() {
                             )
                         }
 
-                        TransactionUIState.Loading -> {
+                        TransactionListUIState.Loading -> {
                             showLoading(true)
                         }
 
-                        is TransactionUIState.Success -> {
+                        is TransactionListUIState.Success -> {
                             showLoading(false)
                             if (transactionsState.transactionList.isNotEmpty()) {
                                 transactionAdapter.updateList(transactionsState.transactionList)
@@ -76,7 +78,13 @@ class TransactionListFragment : Fragment() {
                             }
                         }
 
-                        else -> {}
+                        else -> {
+                            showLoading(false)
+                            showMessageDialog(
+                                R.string.transaction_authorization_text_title_error_dialog,
+                                R.string.transaction_list_text_error,
+                            )
+                        }
                     }
                 }
             }

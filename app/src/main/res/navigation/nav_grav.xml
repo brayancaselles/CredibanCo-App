@@ -14,15 +14,36 @@
         android:id="@+id/transactionAuthorizationFragment"
         android:name="com.brayandev.credibancoapp.ui.transactionAuthorization.TransactionAuthorizationFragment"
         android:label="fragment_transaction_authorization"
-        tools:layout="@layout/fragment_transaction_authorization" />
+        tools:layout="@layout/fragment_transaction_authorization">
+        <action
+            android:id="@+id/action_searchTransactionFragment_to_transactionDetailDialogFragment2"
+            app:destination="@id/transactionDetailFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/searchTransactionFragment2"
+        android:id="@+id/searchTransactionFragment"
         android:name="com.brayandev.credibancoapp.ui.searchTransaction.SearchTransactionFragment"
         android:label="fragment_search_transaction"
         tools:layout="@layout/fragment_search_transaction" />
-    <fragment
+    <dialog
         android:id="@+id/transactionDetailFragment"
         android:name="com.brayandev.credibancoapp.ui.transactionDetail.TransactionDetailFragment"
         android:label="fragment_transaction_detail"
-        tools:layout="@layout/fragment_transaction_detail" />
+        tools:layout="@layout/fragment_transaction_detail">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="receiptNumber"
+            app:argType="string" />
+        <argument
+            android:name="transactionIdentifier"
+            app:argType="string" />
+        <argument
+            android:name="statusCode"
+            app:argType="string" />
+        <argument
+            android:name="statusDescription"
+            app:argType="string" />
+
+    </dialog>
 </navigation>
