@@ -23,7 +23,7 @@ class SearchTransactionViewModel @Inject constructor(private val getAllTransacti
 
     fun getTransactionList() {
         viewModelScope.launch {
-            getAllTransactionUseCase.getAllTransaction()
+            getAllTransactionUseCase()
                 .catch {
                     _transactions.value =
                         it.message?.let { error -> TransactionListUIState.Error(error) }!!

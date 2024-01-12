@@ -69,7 +69,8 @@ class SearchTransactionFragment : Fragment() {
                         is TransactionListUIState.Success -> {
                             showLoading(false)
                             transactionList = transactionState.transactionList
-                            binding.textViewNoListTransaction.isVisible = transactionState.transactionList.isEmpty()
+                            binding.textViewNoListTransaction.isVisible =
+                                transactionState.transactionList.isEmpty()
                             searchTransactionAdapter.updateList(transactionList)
                             searchTransactionAdapter.notifyDataSetChanged()
                         }
@@ -110,6 +111,18 @@ class SearchTransactionFragment : Fragment() {
                 transaction.receiptNumber.lowercase()
                     .contains(receiptNumberFilter.toString().lowercase())
             }
+            if (receiptNumberFilter.toString().length > 0 && transactionListFilter.isEmpty()) {
+                binding.textViewNoListTransaction.isVisible = true
+                binding.textViewNoListTransaction.text =
+                    getString(R.string.transaction_list_text_no_transaction)
+            } else if (transactionListFilter.isEmpty()) {
+                binding.textViewNoListTransaction.isVisible = true
+                binding.textViewNoListTransaction.text =
+                    getString(R.string.transaction_list_text_no_transaction_list)
+            } else if (transactionListFilter.isNotEmpty()) {
+                binding.textViewNoListTransaction.isVisible = false
+            }
+
             searchTransactionAdapter.updateList(transactionListFilter)
         }
     }

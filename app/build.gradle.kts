@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
-    //id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
 }
@@ -40,26 +39,27 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    kotlin {
+    /*kotlin {
         jvmToolchain(8)
-    }
+    }*/
 }
 
 dependencies {
-
-    val navVersion = "2.7.0"
-    val hiltVersion = "2.48" // 2.44-2.48- 2.44.2
-    val roomVersion = "2.5.2" // 2.4.2
-    val retrofitVersion = "2.9.0"
-    val coroutinesTestVersion = "1.6.4"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    val navVersion = "2.7.0"
+    val hiltVersion = "2.48" // 2.44-2.48- 2.44.2
+    val roomVersion = "2.5.2" // 2.4.2
+    val retrofitVersion = "2.9.0"
+    val coroutinesTestVersion = "1.6.4"
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")

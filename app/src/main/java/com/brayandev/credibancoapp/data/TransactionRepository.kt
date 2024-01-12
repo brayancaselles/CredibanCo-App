@@ -15,7 +15,9 @@ class TransactionRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
 ) {
 
-    val transactions: Flow<List<TransactionModel>> = localDataSource.transactions
+    fun getAllTransaction(): Flow<List<TransactionModel>> {
+        return localDataSource.getAllTransactions()
+    }
 
     suspend fun requestTransaction(model: TransactionDto): Boolean {
         val result = remoteDataSource.requestTransaction(model)

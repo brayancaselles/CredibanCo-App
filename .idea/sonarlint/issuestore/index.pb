@@ -89,3 +89,7 @@ Xapp/src/main/java/com/brayandev/credibancoapp/data/local/database/TransactionDa
 Oapp/src/main/java/com/brayandev/credibancoapp/data/local/database/RoomModule.kt,6\f\6f0e45db41dab001dd9f3988d7be4580608c6cb2
 Ç
 Rapp/src/main/java/com/brayandev/credibancoapp/data/remote/network/NetworkModule.kt,9\4\944af3234325c918fb812a7a5373dc828acb9582
+Å
+Qapp/src/test/java/com/brayandev/credibancoapp/domain/GetTransactionUseCaseTest.kt,5\3\5370dbbe1e9da84b233c9d8e364793e62dda99ba
+Ö
+Uapp/src/test/java/com/brayandev/credibancoapp/domain/RequestTransactionUseCaseTest.kt,4\6\466efb3f8edcfab347ebf9e1c8f57aa5582e4fdf

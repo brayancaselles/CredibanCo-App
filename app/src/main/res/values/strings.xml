@@ -23,6 +23,7 @@
     <!--endregion-->
     <!--region Transaction list-->
     <string name="transaction_list_text_no_transaction_list">No hay transacciones disponibles en este momento.</string>
+    <string name="transaction_list_text_no_transaction">No se encuentran transacciones con ese número de recibo.</string>
     <string name="transaction_list_text_title_detail">Detalle transacción</string>
     <string name="transaction_list_text_receipt_number">Número de recibo: %s</string>
     <string name="transaction_list_text_identifier">Id transacción: %s</string>

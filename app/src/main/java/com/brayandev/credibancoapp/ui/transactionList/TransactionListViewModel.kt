@@ -22,7 +22,7 @@ class TransactionListViewModel @Inject constructor(private val getAllTransaction
 
     fun getTransactionList() {
         viewModelScope.launch {
-            getAllTransactionsUseCase.getAllTransaction()
+            getAllTransactionsUseCase()
                 .catch {
                     it.message?.let { error ->
                         _transactions.value = TransactionListUIState.Error(error)

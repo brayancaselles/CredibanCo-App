@@ -30,7 +30,7 @@ class TransactionAuthorizationViewModel @Inject constructor(private val createTr
             _isLoading.value = true
             try {
                 val result = withContext(Dispatchers.IO) {
-                    createTransactionUseCase.createTransaction(
+                    createTransactionUseCase.requestTransaction(
                         commerceCode,
                         terminalCode,
                         amount,

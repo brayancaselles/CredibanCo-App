@@ -11,8 +11,9 @@ import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(private val dao: TransactionDao) {
 
-    val transactions: Flow<List<TransactionModel>> =
-        dao.getAllTransaction().map { transactions -> transactions.map { it.toDomain() } }
+    fun getAllTransactions(): Flow<List<TransactionModel>> {
+        return dao.getAllTransaction().map { transactions -> transactions.map { it.toDomain() } }
+    }
 
     suspend fun insertTransaction(transactions: TransactionEntity) {
         dao.insertTransaction(transactions)
