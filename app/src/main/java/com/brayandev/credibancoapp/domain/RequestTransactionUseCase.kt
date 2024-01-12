@@ -1,21 +1,21 @@
 package com.brayandev.credibancoapp.domain
 
+import android.util.Log
 import com.brayandev.credibancoapp.data.TransactionRepository
-import com.brayandev.credibancoapp.data.network.dto.TransactionDto
-import com.brayandev.credibancoapp.ui.transactionAuthorization.EnumResponseService
+import com.brayandev.credibancoapp.data.remote.network.dto.TransactionDto
 import javax.inject.Inject
 
-class CreateTransactionUseCase @Inject constructor(private val repository: TransactionRepository) {
+class RequestTransactionUseCase @Inject constructor(private val repository: TransactionRepository) {
 
     suspend fun createTransaction(
         commerceCode: String,
         terminalCode: String,
         amount: String,
         card: String,
-    ): EnumResponseService {
+    ): Boolean {
         val amountReplace = amount.replace(Regex("[$,.]"), "")
 
-        return repository.requestTransactionDataByTransactionInfoFromApi(
+        val result = repository.requestTransaction(
             TransactionDto(
                 commerceCode = commerceCode,
                 terminalCode = terminalCode,
@@ -23,5 +23,7 @@ class CreateTransactionUseCase @Inject constructor(private val repository: Trans
                 card = card,
             ),
         )
+        Log.d("tagggggggggggg", " use case result $result")
+        return result
     }
 }

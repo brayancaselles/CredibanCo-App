@@ -30,7 +30,7 @@ class SearchTransactionFragment : Fragment() {
 
     private val viewModel: SearchTransactionViewModel by viewModels()
     private lateinit var searchTransactionAdapter: SearchTransactionAdapter
-    private var transactionList: MutableList<TransactionModel> = mutableListOf()
+    private var transactionList: List<TransactionModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,13 +68,10 @@ class SearchTransactionFragment : Fragment() {
 
                         is TransactionListUIState.Success -> {
                             showLoading(false)
-                            if (transactionState.transactionList.isNotEmpty()) {
-                                searchTransactionAdapter.updateList(transactionState.transactionList)
-                                transactionList = transactionState.transactionList.toMutableList()
-                                searchTransactionAdapter.notifyDataSetChanged()
-                            } else {
-                                binding.textViewNoListTransaction.isVisible = true
-                            }
+                            transactionList = transactionState.transactionList
+                            binding.textViewNoListTransaction.isVisible = transactionState.transactionList.isEmpty()
+                            searchTransactionAdapter.updateList(transactionList)
+                            searchTransactionAdapter.notifyDataSetChanged()
                         }
                     }
                 }

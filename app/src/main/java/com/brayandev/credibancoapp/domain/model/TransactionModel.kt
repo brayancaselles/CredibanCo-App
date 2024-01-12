@@ -1,6 +1,6 @@
 package com.brayandev.credibancoapp.domain.model
 
-import com.brayandev.credibancoapp.data.database.entities.TransactionEntity
+import com.brayandev.credibancoapp.data.local.database.entities.TransactionEntity
 
 data class TransactionModel(
     val id: Int,

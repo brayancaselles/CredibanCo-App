@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -108,7 +107,12 @@ class TransactionDetailFragment(
 
                 EnumResponseService.IS_DEFAULT -> {
                     isDeleteTransaction(false)
-                    Log.d("ISDEFAULT", "is default value enum")
+                    showMessageDialog(
+                        R.string.transaction_authorization_text_title_error_dialog,
+                        getString(
+                            R.string.transaction_list_text_error,
+                        ),
+                    )
                 }
             }
         }

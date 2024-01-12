@@ -69,13 +69,10 @@ class TransactionListFragment : Fragment() {
 
                         is TransactionListUIState.Success -> {
                             showLoading(false)
-                            if (transactionsState.transactionList.isNotEmpty()) {
-                                transactionAdapter.updateList(transactionsState.transactionList)
-                                transactionAdapter.notifyDataSetChanged()
-                            } else {
-                                binding.recyclerViewTransaction.visibility = View.GONE
-                                binding.textViewNoListTransaction.visibility = View.VISIBLE
-                            }
+                            binding.textViewNoListTransaction.isVisible =
+                                transactionsState.transactionList.isEmpty()
+                            transactionAdapter.updateList(transactionsState.transactionList)
+                            transactionAdapter.notifyDataSetChanged()
                         }
 
                         else -> {

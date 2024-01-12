@@ -1,4 +1,4 @@
-package com.brayandev.credibancoapp.data.database
+package com.brayandev.credibancoapp.data.local.database
 
 import android.content.Context
 import androidx.room.Room

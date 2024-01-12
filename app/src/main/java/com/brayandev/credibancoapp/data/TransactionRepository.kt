@@ -1,59 +1,39 @@
 package com.brayandev.credibancoapp.data
 
-import com.brayandev.credibancoapp.data.database.dao.TransactionDao
-import com.brayandev.credibancoapp.data.database.entities.TransactionEntity
-import com.brayandev.credibancoapp.data.database.entities.toDataBase
-import com.brayandev.credibancoapp.data.network.ApiService
-import com.brayandev.credibancoapp.data.network.dto.AnnulationTransactionDto
-import com.brayandev.credibancoapp.data.network.dto.TransactionDto
-import com.brayandev.credibancoapp.domain.AnnulationTransactionModel
+import com.brayandev.credibancoapp.data.local.LocalDataSource
+import com.brayandev.credibancoapp.data.local.database.entities.toDataBase
+import com.brayandev.credibancoapp.data.remote.RemoteDataSource
+import com.brayandev.credibancoapp.data.remote.network.dto.AnnulationTransactionDto
+import com.brayandev.credibancoapp.data.remote.network.dto.TransactionDto
 import com.brayandev.credibancoapp.domain.model.TransactionModel
-import com.brayandev.credibancoapp.domain.model.toDomain
 import com.brayandev.credibancoapp.ui.transactionAuthorization.EnumResponseService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TransactionRepository @Inject constructor(
-    private val apiService: ApiService,
-    private val transactionDao: TransactionDao,
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
 ) {
-    fun getAllTransactionsFromDatabase(): Flow<List<TransactionModel>> = flow {
-        val transactions = transactionDao.getAllTransaction()
-        emit(transactions.map { it.toDomain() })
-    }
 
-    suspend fun requestTransactionDataByTransactionInfoFromApi(
-        model: TransactionDto,
-    ): EnumResponseService {
-        var enum: EnumResponseService = EnumResponseService.IS_DEFAULT
-        runCatching { apiService.createTransaction(model) }.onSuccess {
-            insertTransaction(it.toDataBase())
-            enum = EnumResponseService.IS_SUCCESS
-        }.onFailure {
-            enum = EnumResponseService.IS_FAILURE
+    val transactions: Flow<List<TransactionModel>> = localDataSource.transactions
+
+    suspend fun requestTransaction(model: TransactionDto): Boolean {
+        val result = remoteDataSource.requestTransaction(model)
+        if (result.second.statusCode == "00") {
+            localDataSource.insertTransaction(result.second.toDataBase())
         }
-        return enum
-    }
-
-    private suspend fun insertTransaction(transactions: TransactionEntity) {
-        transactionDao.insertTransaction(transactions)
+        return result.second.statusCode == "00"
     }
 
     suspend fun requestAnnulationTransaction(
         idTransaction: Int,
         model: AnnulationTransactionDto,
     ): EnumResponseService {
-        var enum: EnumResponseService = EnumResponseService.IS_DEFAULT
-        runCatching { apiService.annulationTransaction(model) }.onSuccess {
-            deleteTransaction(idTransaction)
-            enum = EnumResponseService.IS_SUCCESS
-        }.onFailure { enum = EnumResponseService.IS_FAILURE }
+        val result = remoteDataSource.annulationTransaction(model)
+        if (result.second.statusCode == "00") {
+            localDataSource.annulationTransaction(idTransaction)
+        }
 
-        return enum
-    }
-
-    private suspend fun deleteTransaction(idTransaction: Int) {
-        transactionDao.deleteTransaction(idTransaction)
+        return result.first
     }
 }

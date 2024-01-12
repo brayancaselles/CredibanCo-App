@@ -1,4 +1,4 @@
-package com.brayandev.credibancoapp.data.network.response
+package com.brayandev.credibancoapp.data.remote.network.response
 
 import com.google.gson.annotations.SerializedName
 

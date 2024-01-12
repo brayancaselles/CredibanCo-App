@@ -1,4 +1,4 @@
-package com.brayandev.credibancoapp.data.network.dto
+package com.brayandev.credibancoapp.data.remote.network.dto
 
 import java.util.UUID
 

@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -18,8 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.brayandev.credibancoapp.R
 import com.brayandev.credibancoapp.databinding.FragmentTransactionAuthorizationBinding
 import com.brayandev.credibancoapp.utils.dismissKeyboard
-import com.brayandev.credibancoapp.utils.loseFocusAfterAction
-import com.brayandev.credibancoapp.utils.onTextChanged
+import com.brayandev.credibancoapp.utils.validateCharacters
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -33,6 +31,11 @@ class TransactionAuthorizationFragment : Fragment() {
     private val viewModel: TransactionAuthorizationViewModel by viewModels()
     private var currentString: String = ""
 
+    private var isCompleteCommerceCode: Boolean? = null
+    private var isCompleteTerminalCode: Boolean? = null
+    private var isCompleteAmount: Boolean? = null
+    private var isCompleteCard: Boolean? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,24 +43,34 @@ class TransactionAuthorizationFragment : Fragment() {
     ): View {
         _binding = FragmentTransactionAuthorizationBinding.inflate(inflater, container, false)
         binding.apply {
-            editTextCommerceCode.loseFocusAfterAction(EditorInfo.IME_ACTION_NEXT)
-            editTextCommerceCode.onTextChanged { onFieldChanged() }
-            editTextTerminalCode.loseFocusAfterAction(EditorInfo.IME_ACTION_NEXT)
-            editTextTerminalCode.onTextChanged { onFieldChanged() }
-            editTextAmount.loseFocusAfterAction(EditorInfo.IME_ACTION_NEXT)
-            editTextAmount.onTextChanged { onFieldChanged() }
-            editTextCard.loseFocusAfterAction(EditorInfo.IME_ACTION_DONE)
-            editTextCard.setOnFocusChangeListener { _, hasFocus -> onFieldChanged(hasFocus) }
-            editTextCard.onTextChanged { onFieldChanged() }
-
             buttonAuthorize.setOnClickListener {
                 it.dismissKeyboard()
-                if (validateIsNotEmptyText()) {
+                if (validateTextCharacters()) {
                     viewModel.onDataSelected(
                         editTextCommerceCode.text.toString(),
                         editTextTerminalCode.text.toString(),
                         editTextAmount.text.toString(),
                         editTextCard.text.toString(),
+                        showDialog = {
+                            showMessageDialog(
+                                R.string.transaction_authorization_text_title_dialog,
+                                R.string.transaction_authorization_text_success_transaction,
+                            )
+                            clearText()
+                        },
+                        isErrorRequest = {
+                            if (it) {
+                                showMessageDialog(
+                                    R.string.transaction_authorization_text_title_error_dialog,
+                                    R.string.transaction_authorization_text_failure_transaction,
+                                )
+                            } else {
+                                showMessageDialog(
+                                    R.string.transaction_authorization_text_title_error_dialog,
+                                    R.string.transaction_list_text_error,
+                                )
+                            }
+                        },
                     )
                 } else {
                     Toast.makeText(
@@ -68,29 +81,30 @@ class TransactionAuthorizationFragment : Fragment() {
                 }
             }
         }
+        initUIState()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
+    private fun initUIState() {
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.viewFieldState.collect {
-                    updateUI(it)
-                }
-            }
-        }
-        viewModel.showDialog.observe(viewLifecycleOwner) {
-            showDialog(it)
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.showLoading.collect { event ->
-                    event.showLoading?.let { showLoading(it) }
+                viewModel.isLoading.collect {
+                    binding.progressBar.isVisible = it
                 }
             }
         }
         initTextChange()
+        validateTextCharacters()
+    }
+
+    private fun validateTextCharacters(): Boolean {
+        with(binding) {
+            editTextCommerceCode.validateCharacters(6) { isCompleteCommerceCode = it }
+            editTextTerminalCode.validateCharacters(6) { isCompleteTerminalCode = it }
+            editTextAmount.validateCharacters(4) { isCompleteAmount = it }
+            editTextCard.validateCharacters(16) { isCompleteCard = it }
+        }
+        return isCompleteCommerceCode == true && isCompleteTerminalCode == true && isCompleteAmount == true && isCompleteCard == true
     }
 
     private fun initTextChange() {
@@ -126,47 +140,6 @@ class TransactionAuthorizationFragment : Fragment() {
         }
     }
 
-    private fun onFieldChanged(hasFocus: Boolean = false) {
-        if (!hasFocus) {
-            viewModel.onFieldsChanged(
-                commerceCode = binding.editTextCommerceCode.text.toString(),
-                terminalCode = binding.editTextTerminalCode.text.toString(),
-                amount = binding.editTextAmount.text.toString(),
-                card = binding.editTextCard.text.toString(),
-            )
-        }
-    }
-
-    private fun updateUI(viewState: ValidCharacterUiState) {
-        binding.apply {
-            editTextCommerceCode.error =
-                if (viewState.isValidCommerceCode) null else getString(R.string.transaction_authorization_text_validate_commerce_code)
-            editTextTerminalCode.error =
-                if (viewState.isValidTerminalCode) null else getString(R.string.transaction_authorization_text_validate_terminal_code)
-            editTextAmount.error =
-                if (viewState.isValidTerminalCode) null else getString(R.string.transaction_authorization_text_validate_amount)
-            editTextCard.error =
-                if (viewState.isValidTerminalCode) null else getString(R.string.transaction_authorization_text_validate_card)
-        }
-    }
-
-    private fun showDialog(enum: EnumResponseService) {
-        when (enum) {
-            EnumResponseService.IS_SUCCESS -> {
-                showMessageDialog(
-                    R.string.transaction_authorization_text_title_dialog,
-                    R.string.transaction_authorization_text_success_transaction,
-                )
-                clearText()
-            }
-
-            EnumResponseService.IS_FAILURE, EnumResponseService.IS_DEFAULT -> showMessageDialog(
-                R.string.transaction_authorization_text_title_error_dialog,
-                R.string.transaction_authorization_text_failure_transaction,
-            )
-        }
-    }
-
     private fun showMessageDialog(
         title: Int,
         message: Int,
@@ -184,10 +157,6 @@ class TransactionAuthorizationFragment : Fragment() {
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        binding.progressBar.isVisible = show
-    }
-
     private fun validateIsNotEmptyText(): Boolean {
         return binding.editTextCommerceCode.text!!.isNotEmpty() &&
             binding.editTextTerminalCode.text!!.isNotEmpty() &&
@@ -198,9 +167,13 @@ class TransactionAuthorizationFragment : Fragment() {
     private fun clearText() {
         binding.apply {
             editTextCommerceCode.text?.clear()
+            editTextCommerceCode.error = null
             editTextTerminalCode.text?.clear()
+            editTextTerminalCode.error = null
             editTextAmount.text?.clear()
+            editTextAmount.error = null
             editTextCard.text?.clear()
+            editTextCard.error = null
         }
     }
 }

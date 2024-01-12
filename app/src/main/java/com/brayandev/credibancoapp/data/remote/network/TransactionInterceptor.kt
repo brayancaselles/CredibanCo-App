@@ -1,4 +1,4 @@
-package com.brayandev.credibancoapp.data.network
+package com.brayandev.credibancoapp.data.remote.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

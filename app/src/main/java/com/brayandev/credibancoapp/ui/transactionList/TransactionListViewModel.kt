@@ -16,21 +16,22 @@ import javax.inject.Inject
 class TransactionListViewModel @Inject constructor(private val getAllTransactionsUseCase: GetTransactionUseCase) :
     ViewModel() {
 
-    private val _transactions = MutableStateFlow<TransactionListUIState>(TransactionListUIState.Loading)
+    private val _transactions =
+        MutableStateFlow<TransactionListUIState>(TransactionListUIState.Loading)
     val transactions: StateFlow<TransactionListUIState> = _transactions
 
     fun getTransactionList() {
         viewModelScope.launch {
-            getAllTransactionsUseCase.invoke().apply {
-                catch {
+            getAllTransactionsUseCase.getAllTransaction()
+                .catch {
                     it.message?.let { error ->
                         _transactions.value = TransactionListUIState.Error(error)
                     }
                 }
-                flowOn(Dispatchers.IO).collect {
+                .flowOn(Dispatchers.IO)
+                .collect {
                     _transactions.value = TransactionListUIState.Success(it)
                 }
-            }
         }
     }
 }

@@ -1,3 +1,3 @@
-package com.brayandev.credibancoapp.data.network.dto
+package com.brayandev.credibancoapp.data.remote.network.dto
 
 data class AnnulationTransactionDto(val receiptId: String, val rrn: String)

@@ -1,4 +1,4 @@
-package com.brayandev.credibancoapp.data.network
+package com.brayandev.credibancoapp.data.remote.network
 
 import com.brayandev.credibancoapp.data.di.ApiUrl
 import dagger.Module

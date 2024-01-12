@@ -1,10 +1,11 @@
-package com.brayandev.credibancoapp.data.database.dao
+package com.brayandev.credibancoapp.data.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.brayandev.credibancoapp.data.database.entities.TransactionEntity
+import com.brayandev.credibancoapp.data.local.database.entities.TransactionEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
@@ -16,8 +17,11 @@ interface TransactionDao {
     suspend fun deleteTransaction(idTransaction: Int)
 
     @Query("SELECT * FROM transaction_table ORDER BY id DESC")
-    suspend fun getAllTransaction(): List<TransactionEntity>
+    fun getAllTransaction(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transaction_table WHERE id = :idTransaction")
     suspend fun getTransactionById(idTransaction: Int): TransactionEntity
+
+    @Query("SELECT COUNT(*) FROM transaction_table")
+    suspend fun countTransactions(): Int
 }
