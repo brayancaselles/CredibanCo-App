@@ -93,3 +93,5 @@ Rapp/src/main/java/com/brayandev/credibancoapp/data/remote/network/NetworkModule
 Qapp/src/test/java/com/brayandev/credibancoapp/domain/GetTransactionUseCaseTest.kt,5\3\5370dbbe1e9da84b233c9d8e364793e62dda99ba
 …
 Uapp/src/test/java/com/brayandev/credibancoapp/domain/RequestTransactionUseCaseTest.kt,4\6\466efb3f8edcfab347ebf9e1c8f57aa5582e4fdf
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
